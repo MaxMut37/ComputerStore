@@ -1,0 +1,356 @@
+﻿<Window x:Class="ComputerStore.View.CartView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComputerStore.View"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:viewModel ="clr-namespace:ComputerStore.ViewModel"
+        xmlns:model="clr-namespace:ComputerStore.Model"
+        mc:Ignorable="d"
+        Title="CartView" Height="800" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+
+
+    <Window.DataContext>
+        <viewModel:CartViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisibleReg"
+                 Mode="TwoWay"
+                 Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+
+    <Border CornerRadius="20">
+        <Border.Background>
+            <ImageBrush ImageSource="/Images/backgroundBlue1.jpg"/>
+        </Border.Background>
+        <Border CornerRadius="20"
+            BorderThickness="5"
+            Opacity="0.5">
+
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#87CEEB" Offset="0"/>
+
+                    <GradientStop Color="#1E90FF" Offset="1"/>
+
+                    <GradientStop Color="#0000FF" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#800080" Offset="0"/>
+
+                    <GradientStop Color="#00008B" Offset="0.65"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="4" Margin="0,0,5,0">
+                        <TextBlock Text="Cart"
+                       Foreground="#BA55D3"
+                       FontSize="25"
+                       FontFamily="Montserrat"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"/>
+
+
+
+                        <Button x:Name="btnMinimaze"
+                    Content="-"
+                    Foreground="Black"
+                    FontSize="16"
+                    FontFamily="Montserrat"
+                    Cursor="Hand"
+                            Margin="520,0,0,0"
+                    Grid.Column="2" Height="30" VerticalAlignment="Top"
+                    Click="btnMinimaze_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#6495ED"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="		#00FFFF"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="20" Height="20"
+                                        CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <Button x:Name="btnClose"
+                            Content="X"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"
+                            Margin="5,0,0,0"
+                            Grid.Column="3" Height="30" VerticalAlignment="Top"
+                            Click="btnCloze_Click">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="#800080"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="	#FF0000"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Width="20" Height="20"
+                                        CornerRadius="9"
+                                        Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Button x:Name="btnAddProduct"
+                        Grid.Row="1"
+                        Content="Pay"
+                        Foreground="White"
+                        FontSize="25"
+                        FontFamily="Montserrat"
+                        Cursor="Hand"
+                        Margin="0,0,0,0"
+                        Command="{Binding AddProductCommand}">
+                    <!--Grid.Column="1" Height="30" VerticalAlignment="Top"-->
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#800080"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="		#00FFFF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="170" Height="25"
+                                    CornerRadius="20"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="btnPage"
+        Grid.Row="1"
+        Content="Page"
+        Foreground="White"
+        FontSize="25"
+        FontFamily="Montserrat"
+        Cursor="Hand"
+        Margin="550,0,0,0"
+        Command="{Binding OpenPage}">
+                    <!--Grid.Column="1" Height="30" VerticalAlignment="Top"-->
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#800080"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="		#00FFFF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="170" Height="25"
+                    CornerRadius="20"
+                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Grid Width="780"
+                            Grid.Row="2"
+                            
+                            Margin="0,15,0,0">
+                    <!--Orientation="Vertical"-->
+
+
+                    <ScrollViewer Background="#423e5d" Width="700" Margin="20,10,20,20">
+                        <ListView x:Name="ListViewProducts" 
+                                  Margin="30,20,30,20" 
+                                  ItemsSource="{Binding carts}" 
+                                  ScrollViewer.CanContentScroll="True" 
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                  BorderThickness="0" 
+                                  Background="Transparent">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border x:Name="ItemBorder" HorizontalAlignment="Center"
+                                            CornerRadius="10"
+                                            BorderThickness="1" BorderBrush="{Binding Color, UpdateSourceTrigger=PropertyChanged}"
+                                            Width="300"
+                                            Height="600"
+                                            Padding="5"
+                                            Background="#22202f">
+                                        <StackPanel Orientation="Vertical">
+                                            <DockPanel Height="200">
+                                                <Border Height="190" Width="190"
+                                                        Padding="3 0 3 0"
+                                                        CornerRadius="10"
+                                                        BorderThickness="1.6" BorderBrush="Gray">
+                                                    <Border.Background>
+                                                        <ImageBrush Stretch="Fill" ImageSource="{Binding product.Image, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            </DockPanel>
+                                            <StackPanel VerticalAlignment="Center" Margin="0 9">
+                                                <TextBlock FontSize="16" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="White" TextWrapping="Wrap" Text="{Binding product.Name, UpdateSourceTrigger=PropertyChanged}" />
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="150">
+                                                    <TextBox HorizontalAlignment="Left" Width="400" Padding="5" Margin="5, 5, 5, 0" Foreground="Black" Text="{Binding product.Specifications, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"/>
+                                                </ScrollViewer>
+                                                <DockPanel Cursor="">
+                                                    <TextBlock FontSize="15" DockPanel.Dock="Left" Margin="3 0 0 0" TextAlignment="Left" Width="90" Foreground="White" Text="{Binding product.Cost, UpdateSourceTrigger=PropertyChanged,StringFormat=\{0\}₽}" />
+                                                    <TextBlock FontSize="15" DockPanel.Dock="Right" Margin="0 0 3 0" TextAlignment="Right" Width="90" Foreground="White" Text="{Binding AmountProduct, UpdateSourceTrigger=PropertyChanged, StringFormat=Кол-во: \{0\}}" />
+                                                    <Image Source="{Binding CurrentRateSource, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="93"/>
+                                                </DockPanel>
+                                                <Button x:Name="btn"
+                                                        
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Grid},Path=DataContext.IncreaseTheNumberCommand}"
+                                                        CommandParameter ="{Binding product.IdProduct}"
+                                                        Content="+"
+                                                        Foreground="White"
+                                                        FontSize="25"
+                                                        FontFamily="Montserrat"
+                                                        Cursor="Hand"
+                                                        Margin="0,25,0,0">
+
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Background" Value="#800080"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="		#00FFFF"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Width="250" Height="25"
+                    CornerRadius="20"
+                    Background="{TemplateBinding Background}">
+                                                                <ContentPresenter VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+
+                                                </Button>
+                                                <Button x:Name="btnLogin"
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Grid},Path=DataContext.ReduceTheNumberCommand}"
+                                   
+                                    CommandParameter ="{Binding product.IdProduct}"
+                                    Foreground="White"
+                                    Content="-"
+                                    FontSize="25"
+                                    FontFamily="Montserrat"
+                                    Cursor="Hand"
+                                    Margin="0,25,0,0">
+
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Background" Value="#800080"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="		#00FFFF"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Width="250" Height="25"
+CornerRadius="20"
+Background="{TemplateBinding Background}">
+                                                                <ContentPresenter VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+
+                                                </Button>
+                                                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock HorizontalAlignment="Center" Margin="10 0 10 0" Foreground="Aqua" Text="{Binding CreationDate,StringFormat=d, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <TextBlock HorizontalAlignment="Center" Margin="10 0 10 0" Foreground="Red" Text="{Binding Deleted_at,StringFormat=d, UpdateSourceTrigger=PropertyChanged}" />
+                                                </StackPanel>-->
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>
+
+    
+
+
+    
+
+
+
+
